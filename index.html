@@ -25,20 +25,52 @@
       margin: 0;
     }
 
-    .content {
-      padding: 20px;
+    .carousel {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      overflow: hidden;
     }
 
-    .image {
-      width: 80%;
-      max-width: 400px;
-      margin: 20px auto;
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-images img {
+      width: 100%;
+      max-width: 600px;
     }
 
     .message {
       font-size: 1.2em;
       color: #333;
       margin-top: 20px;
+    }
+
+    .buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .prev,
+    .next {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 30px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
     footer {
@@ -56,17 +88,58 @@
   <header>
     <h1>生日快乐，亲爱的朋友！</h1>
   </header>
-  <div class="content">
-    <img class="image" src="pictures/p1.jpg" alt="生日祝福图片1">
-    <!-- <img class="image" src="pictures/p1.jpg" alt="生日祝福图片2"> -->
-    <p class="message">
-      祝你生日快乐，愿你的每一天都充满欢笑和幸福！<br>
-      希望你在新的一岁里继续追逐梦想，永远保持开心和健康！🎂🎉
-    </p>
+  <div class="carousel">
+    <div class="carousel-images">
+      <img src="pictures/p1.jpg" alt="生日祝福图片1">
+      <img src="pictures/p2.jpg" alt="生日祝福图片2">
+      <img src="pictures/p3.jpg" alt="生日祝福图片3">
+      <!-- 继续添加更多图片 -->
+    </div>
+    <div class="buttons">
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
   </div>
+  <p class="message">
+    祝你生日快乐，愿你的每一天都充满欢笑和幸福！<br>
+    希望你在新的一岁里继续追逐梦想，永远保持开心和健康！🎂🎉
+  </p>
   <footer>
-    <p>由你的朋友 爱学习的辉辉i 制作 ❤️</p>
+    <p>由你的朋友 [你的名字] 制作 ❤️</p>
   </footer>
+
+  <script>
+    // 获取轮播容器、图片容器以及按钮
+    const carousel = document.querySelector('.carousel-images');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const totalImages = document.querySelectorAll('.carousel-images img').length;
+
+    let currentIndex = 0;
+
+    // 点击"上一张"按钮
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      updateCarousel();
+    });
+
+    // 点击"下一张"按钮
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateCarousel();
+    });
+
+    // 更新轮播图的位置
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    // 自动轮播（每3秒切换一次）
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateCarousel();
+    }, 3000);
+  </script>
 </body>
 
 </html>
